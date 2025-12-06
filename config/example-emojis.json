@@ -35,5 +35,12 @@
   "unlock": "",
   "lock": "",
   "garbage": "",
-  "loading": ""
+  "loading": "",
+  "boost": "",
+  "volt": "",
+  "monitor": "",
+  "user": "",
+  "filter": "",
+  "secure": "",
+  "plugin": ""
 }

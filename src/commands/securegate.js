@@ -36,7 +36,7 @@ module.exports = {
 
       const statusEmbed = new EmbedBuilder()
         .setColor(embeds.color)
-        .setTitle("🔐 SecureGate System Status")
+        .setTitle(`${emojis.secure} SecureGate System Status`)
         .setDescription(
           state === "enabled"
             ? `**${emojis.tic || "✅"} SecureGate is currently ACTIVE and protecting this server.**`
@@ -44,22 +44,22 @@ module.exports = {
         )
         .addFields(
           {
-            name: "⚙️ System State",
+            name: `${emojis.server} System State`,
             value: `\`${state.toUpperCase()}\``,
             inline: true,
           },
           {
-            name: "🛡️ Protection Level",
+            name: `${emojis.mod} Protection Level`,
             value: state === "enabled" ? "`High Security`" : "`No Protection`",
             inline: true,
           },
           {
-            name: "👤 Minimum Account Age",
+            name: `${emojis.user} Minimum Account Age`,
             value: "`5 Days`",
             inline: true,
           },
           {
-            name: "🚫 Username Filters",
+            name: `${emojis.filter} Username Filters`,
             value:
               "• Discord invite links\n" +
               "• Any website links (http/https)\n" +
@@ -68,21 +68,21 @@ module.exports = {
             inline: false,
           },
           {
-            name: "🤖 Bot Protection",
+            name: `${emojis.bot} Bot Protection`,
             value:
               "• Blocks **unverified bots**\n" +
               "• Allows only **Verified Discord Bots**",
             inline: false,
           },
           {
-            name: "🧠 Behavior Monitoring",
+            name: `${emojis.monitor} Behavior Monitoring`,
             value:
               "• Detects **administrator permission gain within 1 minute** of joining\n" +
               "• Flags suspicious raid / fast-privilege behavior",
             inline: false,
           },
           {
-            name: "⚡ Auto Actions",
+            name: `${emojis.volt} Auto Actions`,
             value:
               "• Instantly **kicks** suspicious members\n" +
               "• Sends detailed **modlog reports** for each action\n" +
@@ -90,21 +90,21 @@ module.exports = {
             inline: false,
           },
           {
-            name: "📜 Logging",
+            name: `${emojis.reason} Logging`,
             value:
               "• Logs all automatic actions to the configured **modlog channel**\n" +
               "• Includes reason, member info & SecureGate as the moderator",
             inline: false,
           },
           {
-            name: "⚠️ Safety Handling",
+            name: `${emojis.warning} Safety Handling`,
             value:
               "• If the bot cannot kick a member due to **role hierarchy**, SecureGate sends a **warning embed** instead\n" +
               "• Encourages manual review by real moderators",
             inline: false,
           },
           {
-            name: "🧩 Controlled By",
+            name: `${emojis.plugin} Controlled By`,
             value:
               "• `/securegate enable`\n" +
               "• `/securegate disable`\n" +
@@ -123,7 +123,7 @@ module.exports = {
 
     const confirmEmbed = new EmbedBuilder()
       .setColor(embeds.color)
-      .setTitle("⚠️ SecureGate Confirmation")
+      .setTitle(`${emojis.warning} SecureGate Confirmation`)
       .setDescription(
         isEnabling
           ? `Are you sure you want to **ENABLE** SecureGate?\n\n**Protection Includes:**\n` +
@@ -158,7 +158,7 @@ module.exports = {
     collector.on("collect", async i => {
       if (i.user.id !== interaction.user.id) {
         return i.reply({
-          content: "❌ You cannot use these buttons.",
+          content: `${emojis.cross} You cannot use these buttons.`,
           ephemeral: true,
         });
       }
@@ -167,7 +167,7 @@ module.exports = {
       if (i.customId === "securegate_cancel") {
         collector.stop();
         return i.update({
-          content: "✅ Action cancelled.",
+          content: `${emojis.cross} Action cancelled.`,
           embeds: [],
           components: [],
         });
@@ -179,7 +179,7 @@ module.exports = {
 
         const resultEmbed = new EmbedBuilder()
           .setColor(embeds.color)
-          .setTitle("🔐 SecureGate Updated")
+          .setTitle(`${emojis.secure} SecureGate Updated`)
           .setDescription(
             isEnabling
               ? `**${emojis.tic || "✅"} SecureGate has been successfully ENABLED.**\nAutomatic protection is now active.`
@@ -217,7 +217,7 @@ module.exports = {
       if (collected.size === 0) {
         const timeoutEmbed = new EmbedBuilder()
           .setColor(embeds.color)
-          .setTitle("⏱️ Timed Out")
+          .setTitle(`${emojis.timeout} Timed Out`)
           .setDescription("No response received. Action cancelled automatically.")
           .setFooter({ text: embeds.footer })
           .setTimestamp();

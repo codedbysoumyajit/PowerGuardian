@@ -10,26 +10,27 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("modlogs")
     .setDescription(`Configure modlogs channel`)
-    .addSubcommand((subcommand) =>
+    .addSubcommand(subcommand =>
       subcommand
         .setName("set")
         .setDescription("Set a channel for modlogs")
-        .addChannelOption((option) =>
+        .addChannelOption(option =>
           option
             .setName("logging_channel")
             .setDescription("channel for the modlogs"),
         ),
     )
-    .addSubcommand((subcommand) =>
+    .addSubcommand(subcommand =>
       subcommand.setName("disable").setDescription("Disable Modlogs"),
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .setDMPermission(false),
+
   async execute(interaction, client) {
     const db = require("./../database/connect.js");
-
     const settings = db.table(`guild_${interaction.guild.id}`);
 
+    // -------------------- SET --------------------
     if (interaction.options.getSubcommand() === "set") {
       const channel = interaction.options.getChannel("logging_channel");
 
@@ -37,22 +38,47 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor(embeds.color)
-        .setDescription(
-          `**${emojis.tic} The ModLogs channel has been successfully configured in the ${channel}**`,
+        .setTitle(`${emojis.tic} ModLogs Enabled`)
+        .setThumbnail(interaction.guild.iconURL({ dynamic: true }))
+        .addFields(
+          {
+            name: `${emojis.reason || "📜"} Logging Channel`,
+            value: `${channel}`,
+            inline: false,
+          },
+          {
+            name: `${emojis.mod || "🛡️"} Configured By`,
+            value: `${interaction.user}`,
+            inline: false,
+          },
         )
-        .setFooter({ text: `${embeds.footer}` })
+        .setFooter({ text: embeds.footer })
         .setTimestamp();
 
       return interaction.editReply({ embeds: [embed] });
     }
 
+    // -------------------- DISABLE --------------------
     if (interaction.options.getSubcommand() === "disable") {
       await settings.set(`modlogs`, "");
 
       const embed = new EmbedBuilder()
         .setColor(embeds.color)
-        .setDescription(`**${emojis.tic} The Modlogs feature has been successfully disabled.**`)
-        .setFooter({ text: `${embeds.footer}` })
+        .setTitle(`${emojis.warning || "⚠️"} ModLogs Disabled`)
+        .setThumbnail(interaction.guild.iconURL({ dynamic: true }))
+        .addFields(
+          {
+            name: `${emojis.mod || "🛡️"} Action By`,
+            value: `${interaction.user}`,
+            inline: false,
+          },
+          {
+            name: `${emojis.cross || "❌"} Status`,
+            value: `ModLogs system is now **disabled**.`,
+            inline: false,
+          },
+        )
+        .setFooter({ text: embeds.footer })
         .setTimestamp();
 
       return interaction.editReply({ embeds: [embed] });

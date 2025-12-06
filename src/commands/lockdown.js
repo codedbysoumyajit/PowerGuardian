@@ -87,7 +87,7 @@ module.exports = {
         // Only command invoker can interact
         if (i.user.id !== interaction.user.id) {
           return i.reply({
-            content: "❌ You cannot use these buttons.",
+            content: `${emojis.cross} You cannot use these buttons.`,
             ephemeral: true,
           });
         }
@@ -96,7 +96,7 @@ module.exports = {
         if (i.customId === "lockdown_cancel") {
           collector.stop();
           return i.update({
-            content: "✅ Lockdown cancelled.",
+            content: `${emojis.tic} Lockdown cancelled.`,
             embeds: [],
             components: [],
           });
@@ -155,7 +155,7 @@ module.exports = {
         if (collected.size === 0) {
           const timeoutEmbed = new EmbedBuilder()
             .setColor(embeds.color)
-            .setTitle("⏱️ Action Timed Out")
+            .setTitle(`${emojis.timeout} Action Timed Out`)
             .setDescription("No response received. Action has been automatically cancelled.")
             .setFooter({ text: embeds.footer })
             .setTimestamp();

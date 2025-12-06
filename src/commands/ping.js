@@ -9,7 +9,7 @@ module.exports = {
   async execute(interaction, client) {
     const embed = new EmbedBuilder()
       .setColor(embeds.color)
-      .setTitle(`**PowerGuardian Status:**`)
+      .setTitle(`**${embeds.footer} Status:**`)
       .addFields({
         name: `${emojis.latency} Gateway Latency:`,
         value: `${interaction.client.ws.ping}ms`,
