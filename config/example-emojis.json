@@ -33,5 +33,7 @@
   "id": "",
   "nickname": "",
   "unlock": "",
-  "lock": ""
+  "lock": "",
+  "garbage": "",
+  "loading": ""
 }
